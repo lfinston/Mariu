@@ -1,0 +1,149 @@
+%% b.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is b.mf
+% Revised 2.9.96
+%special "grayfont black";
+beginchar("b", 6.125pt#, 9pt#, .69pt#); "The letter b";
+
+clear_vars;
+do_fill:=true;
+%do_fill:=false;
+scaling_factor = 49/40;
+nom_w = scaling_factor*4.3pt; 
+nom_h = scaling_factor * 7.5pt;
+
+
+
+% This does the downstroke:
+pickup my_fill_pen;
+begingroup save a,b,c;
+
+a = 7.5;
+
+top z0r = (33/64 nom_w,64/64 nom_h);
+pos0(nib,a);
+z1r = z0r shifted (-3/32 nom_w,-4/32 nom_h);
+pos1(nib,a);
+z2r = (17/64 nom_w, 11/128 nom_h);
+pos2(nib,a);
+
+convert_path.p0 (z0e..{dir -115}z1e{(z2-z1)}..{(z2-z1)}z2e);
+
+
+if do_fill=true:
+filldraw p0; 
+fi;
+
+endgroup;
+
+% This does the forestroke:
+
+
+
+begingroup save a,b,c;
+
+
+a = 40;
+
+rt top z3r = (25/128 nom_w,254/256 nom_h);
+pos3(nib,a);
+pos4(nib,a);
+z4 = (dir (a - 90) * whatever) shifted z3; 
+x4 = 18/64 nom_w;
+
+convert_path.p1 (z3e..z4e);
+
+if do_fill=true:
+filldraw p1;
+fi;
+
+endgroup;
+
+% This does the bowl:
+
+
+
+begingroup save a,b,c;
+a = 43;
+
+lft z5l = (16/64 nom_w, 29/64 nom_h);
+pos5(nib,a);
+rt x6r = 38/64 nom_w;
+z6 = (dir a * whatever) shifted z5; 
+pos6(nib,a);
+
+draw z5l--z6r;
+
+top rt z7r = (nom_w,18.34668/64 nom_h);
+pos7(nib,37.5);
+bot z8l = (34/64 nom_w,0);
+pos8(nib,37.5);
+bot z9l = bot z2r shifted (-13/128 nom_w,0);
+pos9(nib,35);
+lft bot z10l = (1/128 nom_w,y2l + 1/128 nom_h);
+pos10(nib,35);
+convert_path.p2 (z6e..z7e..z8e..z9e..z10e);
+
+draw p2;
+
+
+% The steps of p2:
+%  0    1    2    3     4     5    6    7    8    9
+% z6l..z7l..z8l..z9l..z10l--z10r..z9r..z8r..z7r..z6r--cycle
+
+endgroup;
+% This does the crossing point on the bowl.
+
+around_crossing_pt(p2,0,4,x_pt_factor);
+
+% This shifts the letter down to the baseline:
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift(v0,.35pt,-bot y2r);
+else:
+penlabels(range 0 thru 100);
+input nom_rules;
+fi;
+endchar;
+
+
+
+
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+

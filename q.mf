@@ -1,0 +1,131 @@
+%% q.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is q.mf
+%% The bottom left-hand part of the bowl is too thick, but I can't
+%% seem to get it to look right by changing the pos.
+
+%special "grayfont black";
+beginchar("q",4.75pt#,5.75pt#,4pt#); "The letter ";
+clear_vars;
+scaling_factor = 20/20;
+nom_w = scaling_factor*4.1pt;
+nom_h = scaling_factor*5.3pt;
+nom_d = scaling_factor*3.7pt;
+
+do_fill:=true;
+%do_fill:=false;
+
+begingroup save a,b,c;
+a=55;
+pickup my_fill_pen; 
+pos0(nib,a);pos1(nib,a);pos2(nib,a);pos3(nib,a);
+
+top rt z0r = (125/128 nom_w, 60/64 nom_h);
+lft z1l = (97/128 nom_w, 16/64 nom_h);
+lft z2l = (93/128 nom_w, -16/64 nom_d);
+bot lft z3l = (48/64 nom_w, -7/8 nom_d);
+endgroup;
+
+convert_path.p0(z0e..z1e..z2e..z3e);
+
+if do_fill=true:
+filldraw else: draw fi p0;
+
+%% This does the bowl.
+
+pos4(nib,50);pos5(nib,50);pos6(nib,55);
+pos7(nib,55);
+pos8(nib,45);pos9(nib,60);
+top rt z4r = (64/64 nom_w, 58/64 nom_h);
+top rt z5r = (31/64 nom_w, 64/64 nom_h);
+top rt z6r = (16/64 nom_w, 61/64 nom_h);
+bot lft z7l = (2.5/128 nom_w, 6/64 nom_h);
+bot lft z8l = (7/128 nom_w, 5/128 nom_h);
+top rt z9r = (56/64 nom_w, 51/128 nom_h);
+
+begingroup save a,b,c,f,g,i;
+a=1;
+b=1;
+c=1.6;
+g=1;
+i=1.4;
+convert_path.p1(z4e..tension a..z5e..tension b..z6e..tension c..%
+z7e..tension g..z8e..tension i..z9e);
+endgroup;
+
+
+
+if do_fill=true:
+around_crossing_pt(p1,0,4.75,x_pt_factor);
+else: draw p1;
+fi;
+
+%% This does the serif at the bottom of the downstroke.
+
+
+if do_fill=true:
+begingroup save a;
+a=55;
+my_pen(a);
+z10 = (100/128 nom_w, -49/64 nom_d);
+z11 = (118/128 nom_w, -114/128 nom_d);
+draw z10..z11;
+endgroup;
+fi;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.4pt,0pt);
+else:
+penlabels(range 0 thru 6,range 8 thru 30);
+input nom_rules;
+%input nom_rules_extra;
+fi;
+
+
+
+
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,317 @@
+%% calligbase.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is calligbase.mf
+% It contains the macros that I need specifically for my "calligraphic" fonts.
+
+% This is the factor for my crossing point routine:
+% This one is for make_x_point_fill:
+x_pt_factor = .00003;
+% This one is for make_x_point_draw:
+big_x_pt_factor=.2;
+
+%% This is used in cond_end. See below.
+boolean do_test;
+do_test := false;
+
+def clear_vars = 
+numeric nom_w, nom_h, nom_d,scaling_factor,
+extra_under_width, extra_over_width; 
+transform t[]; 
+%% These path variables are used in the vardef convert_path defined below.
+path p[], p[].l, p[].r, p[].m, p[].o, p[].o.m, p[].o.l, p[].o.r;
+picture v[];
+transform t[];
+%% This is is used for the first time in G.mf. It allows me to put in the
+%% values for letter_shift close to beginchar. They are put into a 
+%% string and at the end of the file I use scantokens to read the string.
+%% This makes it easier to run
+%% mfp because if I have two windows, with letter_shift in one and beginchar
+%% in the other, then one of them will disappear when I run mfp (or any of the
+%% other programs that cause windows to disappear).
+
+string letter_shift_string;
+boolean do_rules;
+do_rules = true;
+boolean do_letter_shift;
+do_letter_shift = true;
+
+enddef;
+
+%% This is for testing or not.
+%% cond_end appears instead of end at the end of cm_subdriver.mf
+
+def cond_end = if do_test = true: relax else: scantokens
+"end" fi ; enddef;
+
+
+% This replaces the routine p0 = middle path, p1 = left path, p2 = right path.
+% It replaces my old method of naming paths consecutively.
+% Usage: convert_path.p0 (z0e..z1e..z2e);
+% It produces the left-hand path p0.l, the right-hand path p0.r,
+% the middle path p0.m and the left- and right-hand path p0.
+
+vardef convert_path.@# text t =
+begingroup
+save e;
+let e = relax;
+@#.m = t;
+endgroup;
+forsuffixes e = l,r: @#.e=t;
+endfor
+@# = @#.l -- reverse @#.r -- cycle;
+enddef;
+
+% This makes outer points for using filldraw.
+
+def outer_pt_and_pos (suffix local_point) (expr local_pos) =
+z.local_point.o = z.local_point;
+pos.local_point(nib,local_pos);
+% I'm using 1.2 nib_thickness, because using nib_thickness
+% makes the path a little bit smaller than the actual edge which
+% results from the filldraw command.
+pos[local_point].o(nib+1.2nib_thickness,local_pos);
+enddef;
+
+
+
+
+
+vardef convert_path_outers.@# text t =
+begingroup
+save e;
+let e = relax;
+@#.m = t;
+@#.o.m = t; 
+endgroup;
+forsuffixes e = l,r,o.l,o.r:  
+@#.e=t; 
+endfor
+@# = @#.l -- reverse @#.r -- cycle;
+@#.o = @#.o.l -- reverse @#.o.r -- cycle; 
+enddef;
+
+% This automates filling around a crossing point.
+% It requires a path made with convert_path.
+% Usage: around_crossing_pt(p0,2,3,x_pt_factor);
+
+def around_crossing_pt (suffix local_path) (expr start_time,end_time,factor) =
+begingroup save a,b;
+pickup my_fill_pen; 
+a-start_time = xpart(subpath(start_time,end_time) of local_path.l intersectiontimes %
+subpath(start_time,end_time) of local_path.r);
+
+b-start_time = ypart(subpath(start_time,end_time) of local_path.l intersectiontimes %
+subpath(start_time,end_time) of local_path.r);
+
+filldraw subpath(start_time,a-factor) of local_path.l -- %
+subpath(b-factor,start_time) of local_path.r--cycle;
+
+filldraw subpath(a+factor,end_time) of local_path.l -- %
+subpath(end_time,b+factor) of local_path.r -- cycle;
+endgroup;
+enddef;
+
+% This shows the "penpositions" between the whole-number points of a path.
+% The path must be a fillable type of path made with convert_path.
+% Usage is like this:
+%show_positions (0,5,.1,1);
+% The arguments are: 1) the starting position, 2) the final position, 
+% 3) the distance between the paths, and 4) the number of the outline path.
+
+def show_positions (expr start_pos,end_pos,local_steps) (suffix outside_path) =
+begingroup 
+save b,c,local_path;
+for b = start_pos step local_steps until end_pos:
+path local_path;
+local_path = point b of p.outside_path.l -- point b of p.outside_path.r;
+c := angle (point b of p.outside_path.r - point b of p.outside_path.l);
+if c < 0: c := c + 360; elseif c > 180: c := c - 180; fi
+message "This is the angle of the following path";
+show c;
+show local_path;
+pickup tiny_pen; draw local_path;
+endfor;
+endgroup;
+enddef;
+
+% This shifts a letter, and the nom_rules (if do_rules = true).
+
+
+
+def letter_shift (suffix local_picture) (expr horiz_shift,vert_shift) =
+
+local_picture = currentpicture shifted (horiz_shift,vert_shift);
+currentpicture := local_picture;
+
+if unknown nom_d: nom_d = 0; fi;
+
+if do_rules = true:
+% vertical rules:
+
+begingroup 
+save a,b;
+
+% b divides the nominal box by b.
+b := 4;
+% vertical rules:
+
+for a=0 upto b: 
+%proofrule(((a/b)*nom_w,-nom_d),((a/b)*nom_w,nom_h));
+proofrule(((((a/b)*nom_w) + horiz_shift),(-nom_d + vert_shift)),
+((((a/b)*nom_w) + horiz_shift),(nom_h + vert_shift)));			
+endfor;
+
+for a=1 upto b:
+
+% horizontal rules:
+proofrule(((0 + horiz_shift),(((a/b)*nom_h) + vert_shift)),((nom_w + horiz_shift),(((a/b)*nom_h)) + vert_shift));
+
+endfor;
+
+% horizontal rules for y<0 (depth):
+
+for a= 1 upto b:
+proofrule(((0 + horiz_shift),(((a/b)*(-nom_d)) + vert_shift)),((nom_w + horiz_shift),(((a/b)*(-nom_d)) + vert_shift)));
+endfor;
+
+proofrulethickness .5mm#;
+proofrule((0 + horiz_shift,0 + vert_shift),(nom_w + horiz_shift,0 + vert_shift));
+
+endgroup;
+fi;
+enddef;
+
+% This is copied from cmbase.mf
+
+newinternal currentbreadth;
+vardef pos@#(expr b,d) =
+ if known b: if b<=currentbreadth: errmessage "bad pos"; fi fi
+ (x@#r-x@#l,y@#r-y@#l)=(b-currentbreadth,0) rotated d;
+ x@#=.5(x@#l+x@#r); y@#=.5(y@#l+y@#r) enddef;
+def numeric_pickup_ primary q =
+ currentpen:=pen_[q];
+ pen_lft:=pen_lft_[q];  pen_rt:=pen_rt_[q];
+ pen_top:=pen_top_[q];  pen_bot:=pen_bot_[q];
+ currentpen_path:=pen_path_[q];
+ if known breadth_[q]: currentbreadth:=breadth_[q]; fi enddef;
+
+% This is init_call.mf
+% This file contains things that I need for all my calligraphic letters. 
+
+em#:=12pt#; cap#:=9pt#;ex#:=5pt#;
+u#:=.1pt#;
+thin#:=3u#; thick#:=5u#; 
+define_pixels(em,cap,u,thin,thick);
+
+%% This is for turning fill and draw commands on and off.
+
+boolean do_fill; 
+
+
+%% This is for the letters that need to be shifted with respect to the bounding
+%% box. Used in y.mf.
+
+
+
+
+nib=1pt;
+nib_thickness=.125nib;
+
+% This is for adjusting nom_w and nom_h to account for difference in
+% width of the nib I use for my models, and also in case I change the
+% width of the nib for the programs.
+
+% I've gotten rid of the following and replaced it with the macro
+% "my_pen". I may get error messages because of this.
+
+%pickup pensquare xscaled nib yscaled .15nib rotated 40;
+%norm_pen_40 := savepen;
+
+%pickup pensquare xscaled nib yscaled .15nib rotated 60;
+%norm_pen_60 := savepen;
+
+def my_pen(expr local_angle) =
+pickup pensquare xscaled nib
+yscaled nib_thickness rotated local_angle;
+enddef;
+
+def my_thick_pen(expr local_angle) =
+pickup pensquare xscaled nib yscaled 2nib_thickness rotated local_angle;
+enddef;
+
+
+pickup pencircle scaled nib_thickness;
+my_fill_pen = savepen;
+
+% Delete this when I've revised ok and thorn.
+% This pen is used when joining sections done with draw commands to 
+% sections drawn with fills.
+%def my_no_height_pen(expr local_angle) =
+%pickup pensquare scaled nib rotated local_angle;
+%enddef;
+
+pickup pencircle scaled .03pt;
+
+tiny_pen := savepen;
+pickup pencircle scaled .1pt;
+less_tiny_pen := savepen;
+
+% ************************************************************
+
+% make_middle_path
+% Used in eth.mf.
+% finds a point in between two corresponding points on two other
+% paths, typically the left and right paths on either side of a 
+% crossing point.
+
+def make_middle_path (expr time_path_one,time_path_two,path_one,path_two,distance) =
+   distance[point time_path_one of path_one,point time_path_two of path_two];
+
+enddef;
+% Usage:
+
+%begingroup 
+%save a:
+%a:=4.5;
+%forsuffixes $ = 7,8,9,10,11,12:
+%z$ = make_middle_path(a,p1,p2,.4);
+%a:=a+.1;
+%endfor;
+%endgroup;
+
+% ************************************************************
+
+
+% Local Variables:
+% auto-save-interval:1000
+% End:
+
+
+

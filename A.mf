@@ -1,0 +1,131 @@
+%% A.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is A.mf
+%special "grayfont black";
+beginchar("A",8.125pt#,8.7pt#,0pt#); "The letter uncial a";
+clear_vars;
+scaling_factor = 21/20;
+%do_letter_shift := false;
+letter_shift_string ="letter_shift (v0,.4pt,-.2pt);";
+nom_w = scaling_factor*7pt;
+nom_h = scaling_factor*8.5pt;
+
+do_fill:=true;
+%do_fill:=false;
+
+%% This does the curved downstroke.
+pickup my_fill_pen; 
+pos0(nib,15);pos2(nib,14);pos4(nib,10); pos6(nib,15);
+pos8(nib,10); pos12(nib,20);
+top rt z0r = (22/64 nom_w, 64/64 nom_h);
+z2 = (59/128 nom_w, 53/64 nom_h);
+rt top z4r = (37/64 nom_w, 48/64 nom_h);
+z6 = (36/64 nom_w, 32/64 nom_h);
+lft bot z8r = (50/64 nom_w, 7/64 nom_h);
+bot rt z12r = (128/128 nom_w, 8/128 nom_h);
+
+convert_path.p0(z0e..z2e..z4e..z6e..tension 1.2..z8e..z12e);
+
+
+
+if do_fill=true:
+begingroup save a;
+a=.041;
+filldraw subpath(0,5-a) of p0l--reverse subpath(0,5-a) %
+of p0r--cycle;
+endgroup;
+my_pen(20);
+drawdot z12;
+pickup my_fill_pen; 
+else:
+draw p0;
+fi;
+
+%% This does the bowl.
+pos15(nib,15);pos18(nib,30);pos21(nib,40);
+pos22(nib,30);
+pos24(nib,35);
+
+rt z15r=(34/64 nom_w, 34/64 nom_h);
+lft z18l=(0/64 nom_w, 16/64 nom_h);
+bot lft z21l = (3/64 nom_w, 15/256 nom_h);
+bot lft z22l = (37/128 nom_w, 0/256 nom_h);
+top rt z24r = (44/64 nom_w, 10/64 nom_h);
+
+begingroup save a,b,c,f,g,i,j;
+
+a=1;
+b=1;
+c=1.2;
+f=1.2;
+g=1;
+i=1.1;
+
+convert_path.p1(z15e..tension a and b..z18e..%
+tension c and f..z21e..tension g and i..z22e..z24e);
+
+endgroup;
+
+
+
+if do_fill=true:
+   around_crossing_pt(p1,0,3.825,x_pt_factor);
+else:
+   draw p1;
+fi;
+
+if do_letter_shift = true:
+do_rules := false;
+scantokens letter_shift_string;
+else:
+penlabels(range 0 thru 30);
+input nom_rules;
+%input nom_rules_extra;
+fi;
+
+
+
+
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+
+
+
+
+
+

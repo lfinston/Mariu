@@ -1,0 +1,86 @@
+%% letters.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+%%%% This is ~/metafont/metapost/fonts/letters.mp
+
+input calligbase;
+
+
+
+%incr fignum; input a1;
+%incr fignum;input a2;
+%incr fignum;input y1;
+%incr fignum;
+%input fixed_pen;
+
+beginfig(1);
+
+%% With pen positions, unfilled.
+clear_vars;
+w:=5cm;h:=5cm; % These points are for the bounding box.
+z100=(0,0);
+z101=(w,0);
+z102=(w,h);
+z103=(0,h);
+
+z0=(5mm,5mm);
+z1 = (.w,.h);
+z2 = (.6w, .8h);
+z3 = (w,.3h);
+z4 = (2mm,.9h);
+z5 = (.9w,.9h);
+z6 = (.4w, 0);
+
+pos0(1cm,90); pos1(1cm,270); pos2(1cm,-60); pos3(1cm,75); pos4(1cm,90);
+pos5(1cm,75); pos6(1cm,60);
+
+
+pickup tiny_pen; 
+
+convert_path.p0(z0e..z1e);
+
+
+fill p0;
+
+
+dotlabels.top(0,0r,0l,1,1r,1l,2,2r,2l,3,3r,3l,4,4r,4l,5,5r,5l,6,6r,6l);
+
+
+endfig;
+
+end;
+
+%% Local Variables:
+%% mode:metafont
+%% eval:(if metapost-keymap nil (load "metapost-keymap"))
+%% eval:(use-local-map metapost-mode-map) 
+%% eval:(local-set-key [f9] 'get-metapost-shell)
+%% End:
+
+

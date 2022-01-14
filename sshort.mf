@@ -1,0 +1,114 @@
+%% sshort.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is sshort.mf
+% Revised Nov. 4, 1996.
+%special "grayfont black";
+beginchar(oct"0",6.35pt#,5.8pt#,.43pt#); "The letter s short";
+clear_vars;
+do_fill:=true;
+%do_fill:=false;
+
+scaling_factor = 41/40;
+nom_w = scaling_factor*5.6pt;
+nom_h = scaling_factor*5.3pt;
+
+% This does the beginning of the stroke at the top right
+% corner:
+
+pickup my_fill_pen; 
+
+
+
+
+
+pos0(nib,50);pos1(nib,50);pos2(nib,50);pos3(nib,60);
+pos4(nib,50);pos5(nib,45);pos6(nib,45);pos7(nib,45);
+pos8(nib,45);pos9(nib,45);
+
+top rt z0r = (nom_w, 52/64 nom_h);
+lft x1l = 45/64 nom_w;
+top y1r = nom_h;
+top rt z2r = (37/64 nom_w, 61/64 nom_h);
+bot lft z3l = (47/128 nom_w, 35/64 nom_h);
+bot lft z4l = (1/2 nom_w, 25/64 nom_h);
+top rt z5r = (7/8 nom_w, 34/64 nom_h);
+top rt z6r = (126/128 nom_w, 18/64 nom_h);
+bot lft z7l = (22/32 nom_w, -1/64 nom_h);
+bot lft z8l = (3/8 nom_w, -1/64 nom_h);
+bot lft z9l = (0, -1/32 nom_h);
+
+begingroup
+save a,b,c,f,g,i,j,k,l;
+a= 1.3;
+b= 1.35;
+c = 1.2;
+f = 1.1;
+g = 1;
+i = 1;
+j = 1;
+k = 1;
+l = 1;
+
+convert_path.p0 
+(z0e..tension a..z1e..tension b..z2e..tension c..%
+z3e..tension f..z4e..tension g..z5e..%
+tension i..z6e..tension j..z7e..tension k..z8e..%
+tension l..{dir 210}z9e);
+
+if do_fill=true:
+around_crossing_pt(p0,0,4,x_pt_factor);
+around_crossing_pt(p0,4,9,x_pt_factor);
+fi;
+
+endgroup;
+
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.3pt, 0);
+else:
+penlabels(range 0 thru 9);
+input nom_rules;
+fi;
+
+
+endchar;
+
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

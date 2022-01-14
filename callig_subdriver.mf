@@ -1,0 +1,140 @@
+%% callig_subdriver.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is callig_subdriver.mf
+
+boolean do_input;
+
+%% do_input = true loads all the letters
+
+do_input = true;
+%do_input = false;
+
+
+input calligbase;
+
+% This inputs things that I need for all 
+% my calligraphic letters:
+
+displaying:=-1;
+%special "grayfont black";
+
+
+%% These are the fontdimens
+
+font_normal_space 3.25pt#;
+
+% Put the characters I'm testing here, if do_input = false.
+
+if do_input = false:
+%input N;
+%input a;
+%input b;
+%input c;
+input e;
+input e_test;
+%input eth;
+%input m_test;
+%input y;
+%input test;
+fi;
+
+% This draws the outline of d for making a diagram with Texdraw.
+%input pen_positions;
+
+if do_input=true:  
+
+%% Ordinary lowercase letters
+
+input a; % Revised 17.4.97
+%%%%% Changing the scaling factor of b.mf causes an error at line 101.
+input b; % Revised 2.9.96
+input c; % Revised 5.9.96
+input d;   % Revised 26.8.96. 
+input eth; % Revised 28.9.96
+ % char oct"1"
+input e; % Revised 28.9.96
+input f; % Revised Oct 12, 1996.
+input g; % Revised Oct 12, 1996
+input h; % Revised Oct 14, 1996.
+input i; % Okay, Oct 14, 1996. Revision unnecessary.
+input j; % Revised Oct 25, 1996.
+input k; % Revised Oct 28, 1996. One place needs bit-map editor.
+input l; % Revised Oct 30, 1996.
+input m; % Revised  Nov. 1, 1996.
+input n; % Revised Nov  3, 1996. 
+input o; % Revised Nov. 3, 1996.
+input p; % Revised Nov.  4, 1996.
+input q;
+input r; % Revised Nov.  4, 1996.
+input slong;   % char oct"s"  Revised Nov. 4, 1996.
+input sshort; % Revised Nov. 4, 1996.
+% % char oct"0" 
+input t; % Revised Nov. 7, 1996.
+input u; % Revised Nov. 9, 1996
+input v; % Revised Nov. 11, 1996 
+input x;
+input y;  % Revised Nov. 11, 1996 
+input z; % Revised Nov. 11, 1996 
+input thorn; % Revised Nov. 11, 1996.
+%% char oct"2"; 
+input ok; % % Revised Nov. 23, 1996.
+% Uncials or capitals: 
+input A;
+input E;
+input G;
+input J;
+%input N;
+%% Superscripts
+%%%%% input sup1; % This letter hasn't been programmed yet
+
+fi
+
+end;
+
+
+
+
+
+
+
+% Local Variables:
+% mf-gf:"callig"
+% mode:Metafont
+% auto-save-interval:1000
+% End:
+
+
+
+
+
+
+
+
+

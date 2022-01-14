@@ -1,0 +1,127 @@
+%% pen_positions.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is pen_positions.mf
+% Currently, it contains d.mf
+% This program tests drawing lines to show the change of the penposition 
+% in a letter.
+% It is for the illustrations in my introduction.
+% The function used is show_positions, defined in calligbase.mf
+
+
+% This is d.mf
+% Revised 26.8.96. nib = 1pt, nib_thickness = .125nib;
+
+special "grayfont black";
+beginchar("d",10.3pt#,6pt#,0); "The letter d";
+%do_fill:=true;
+do_fill:=false;
+clear_vars;
+scaling_factor = 20/20;
+nom_w = scaling_factor*6.9pt;
+nom_h=scaling_factor*4.7pt;
+
+
+
+begingroup
+save aa,ba,ca,da,ea;
+
+% for horizontal:
+
+z0 = (9/192 nom_w,168/192 nom_h);
+z1 = (30/96 nom_w, 70/96 nom_h);
+z2 = (35/48 nom_w,69/96 nom_h);
+z3l = (78/96 nom_w, 1/192 nom_h+.075nib);
+z4r = (24/48 nom_w, 16/48 nom_h);
+z5 = (46/96 nom_w,71/96 nom_h);
+
+
+
+% position commands:
+pickup my_fill_pen;
+pos0(nib,50); pos1(nib,60); pos2(nib,60); 
+pos3(nib,60);
+pos4(nib,40); pos5(nib,35);
+
+
+aa = 1;
+ba = 2;
+ca = 1;
+da = 1.1;
+ea = 1.1;
+
+convert_path.p0 
+(z0e..tension aa ..z1e..{dir -10}z2e..tension ca ..z3e{dir -170}..tension da ..z4e..tension ea..z5e);
+% The steps of p0:
+%  0    1    2    3    4    5
+% z0l..z1l..z2l..z3l..z4l..z5l--
+%
+%  6    7    8    9    10   11
+% z5r..z4r..z3r..z2r..z1r..z0r--cycle
+
+endgroup;
+
+pickup tiny_pen; 
+
+
+
+draw subpath(2.3,3.3) of p0.l -- reverse subpath(2.3,3.3) of p0.r -- %
+cycle;
+
+z6 = point 2.3 of p0.m;
+z7 = point 2.55 of p0.m;
+z8 = subpath(2.3,3.3) of p0.l intersectionpoint subpath(2.3,3.3) of p0.r;
+z9 = point 3.05 of p0.m;
+z10 = point 3.3 of p0.m;
+
+
+
+penlabels(range 6 thru 12);
+
+input nom_sixths_rules;
+
+
+
+
+endchar;
+
+
+
+
+
+
+
+% Local Variables:
+% auto-save-interval:0
+% mf-gf:"callig"
+% End:
+
+
+
+

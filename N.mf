@@ -1,0 +1,179 @@
+%% N.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+%%%% This is N.mf
+%%%% Based on drawing at top left.
+
+special "grayfont black";
+beginchar("N",7.5pt#,8.5pt#,4pt#); "The letter ";
+clear_vars;
+scaling_factor = 20/20;
+nom_w = scaling_factor*6.4pt;
+nom_h = scaling_factor*7.8pt;
+nom_d = scaling_factor*3.2pt;
+
+%do_fill=true;
+do_fill=false;
+
+
+%% This does the curved stroke on the left.
+
+
+pickup my_fill_pen; 
+
+pos0(nib,35);pos3(nib,35);pos6(nib,35);pos9(nib,35);
+
+
+bot lft z0l = (0, 13/16 nom_h);
+top rt z3r = (32/64 nom_w, 63/64 nom_h);
+bot lft z6l = (14/64 nom_w, 1/128 nom_w);
+rt z9r = (47/64 nom_w, 13/64 nom_h);
+
+convert_path.p0(z0e..tension 1.25..z3e..tension 1.1..z6e..tension 1.2..z9e);
+
+
+
+if do_fill=true:
+my_pen(35); 
+draw p0.m;
+else
+draw p0;
+fi;
+
+
+pickup my_fill_pen; 
+%%%% This does the vertical stroke with the tail on the right.
+
+pos10(nib,40);
+pos12(nib,40);pos15(nib,40);pos18(nib,40);
+
+top rt z10r = (nom_w, 129/128 nom_h);
+top rt z12r = (56/64 nom_w, 56/64 nom_h);
+z15 = (45/64 nom_w, 16/64 nom_h);
+top rt z18r = (91/128 nom_w, -15/64 nom_d);
+
+%% Change this so the right "serif" is part of the stroke.
+
+convert_path.p1(z10e..z12e..z15e..z18e & z18e);
+
+
+if do_fill=true:
+filldraw p1;
+else: draw p1;
+fi;
+
+
+
+
+%% This makes a hairstroke, no matter where z18 and z21 are in relation to
+%% one another. "a" should not deviate too much from 40 (or whatever the angle
+%% of the nib is at z18 and z21), otherwise it will look bad.
+
+pos21(nib,40);
+bot lft z21l = (20/64 nom_w, -127/128 nom_d);
+begingroup save a,b,c;
+a = angle (z21-z18);
+if do_fill=true:
+my_pen(a);
+draw z18--z21;
+else:
+pickup my_fill_pen;
+draw z18l--z18r--z21r--z21l--cycle;
+fi;
+endgroup;
+
+%% This does the serif at the bottom 
+
+pickup my_fill_pen; 
+begingroup save a,b,c;
+a = 6/8;
+pos22(a*nib, 40);
+pos24(a*nib,40);
+
+endgroup;
+bot lft z22l = bot lft z21l;
+bot lft z24l = (10/64 nom_w, -126/128 nom_d);
+
+
+
+convert_path.p2(z22e{dir 210}..{dir 210}z24e);
+
+if do_fill=true:
+filldraw p2;
+else:
+draw p2
+fi;
+
+
+
+
+%% This does the serif at the left of the vertical stroke
+
+%%z27,z28.
+
+
+%% This does the crossbar.
+
+
+
+
+
+
+do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,0pt,0pt);
+else:
+penlabels(range 0 thru 30);
+input nom_rules;
+%input nom_rules_extra;
+fi;
+
+
+
+
+endchar;
+
+%% This was in the local variables list. I seem not to need it, though.
+% mf-gf:"callig"
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+
+
+
+
+
+

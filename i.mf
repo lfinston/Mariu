@@ -1,0 +1,80 @@
+%% i.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is i.mf
+%special "grayfont black";
+beginchar("i",3.25pt#,6.125pt#,.5pt#); "The letter i";
+
+clear_vars;
+scaling_factor = 22/20;
+nom_w = scaling_factor*2.6pt;
+nom_h = scaling_factor*5.3pt;
+
+% This does the downstroke:
+
+my_pen(20);
+z0 = (9/16 nom_w, 31/32 nom_h);
+z1 = (9/16 nom_w,0);
+z2 = (dir 20 * whatever) shifted z1; 
+x2 = .8nom_w;
+p0 = z0..tension 4..z1..{dir 20}z2;
+draw p0;
+
+% This does the forestroke:
+
+% This finds the point on the downstroke that is the end of the
+% forestroke.
+
+z3 = point .3 of p0;
+
+z4 = (3/16 nom_w,29/32 nom_h);
+my_pen(50);
+p1 = z3..z4;
+draw p1;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.125pt,0);
+else:
+penlabels(range 0 thru 20);
+input nom_rules;
+fi;
+
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

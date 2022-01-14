@@ -1,0 +1,126 @@
+%% z.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is z.mf
+% Revised Nov. 11, 1996 
+%special "grayfont black";
+do_fill:=true;
+%do_fill:=false;
+beginchar("z",6.4pt#,6.1pt#,.7pt#); "The letter z";
+clear_vars;
+scaling_factor = 31/40;
+nom_w = scaling_factor*7.1pt;
+nom_h = scaling_factor*7.2pt;
+
+% This does the upper horizontal.
+
+pickup my_fill_pen; 
+
+begingroup save a,b,c;
+
+a = 55;
+
+pos0(nib,a);pos1(nib,a);pos2(nib,a);pos3(nib,a);pos4(nib,a);
+
+endgroup;
+
+bot lft z0l = (4/64 nom_w, 52/64 nom_h);
+top rt z1r = (5/16 nom_w, 126/128 nom_h);
+bot lft z2l = (48/64 nom_w, 93/128 nom_h);
+bot lft z3l = (54/64 nom_w, 48/64 nom_h);
+bot lft z4l = (57/64 nom_w, 50/64 nom_h);
+z5 = (56/64 nom_w, 69/64 nom_h);
+convert_path.p0(z0e..z1e..z2e..z3e..z4e);
+
+if do_fill=true:
+cutdraw subpath(2,4) of p0.m .. z4r..tension 1.4..z5;
+filldraw p0;
+fi;
+
+%% This draws the diagonal.
+
+
+begingroup save a,b,c;
+
+a = 45;
+
+my_pen(a);
+
+top rt z6 = z2l shifted (1/128 nom_w, 1/64 nom_h);
+bot lft z7 = (16/64 nom_w, 12/64 nom_h);
+
+if do_fill=true:
+draw z6..z7;
+fi;
+
+endgroup;
+
+
+%% This draws the bottom horizontal
+begingroup save a,b,c;
+
+a = 65;
+
+pickup my_fill_pen; 
+pos8(nib,62.5);pos9(nib,62.5);pos10(nib,a);pos11(nib,a);
+
+bot lft z8l = (0, 2/64 nom_h);
+top rt z9r = (9/32 nom_w, 34/128 nom_h);
+bot lft z10l = (46/64 nom_w, 0);
+top rt z11r = (59/64 nom_w, 26/128 nom_h);
+
+convert_path.p1(z8e..z9e..z10e{dir 5}..{dir 50}z11e);
+
+if do_fill=true:
+filldraw p1;
+fi;
+
+endgroup;
+
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift(v0,.4pt,-4/64 nom_h);
+else:
+penlabels(range 0 thru 30);
+input nom_rules;
+fi;
+
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

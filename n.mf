@@ -1,0 +1,137 @@
+%% n.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+%% This is n.mf
+%% Revised Nov  3, 1996.
+%special "grayfont black";
+do_fill:=true;
+%do_fill:=false;
+beginchar("n",5.75pt#,6.3pt#,.6pt#); "The letter n";
+clear_vars;
+begingroup
+save a,b,c;
+scaling_factor = 23/20;
+nom_w = scaling_factor*4.4pt;
+nom_h = scaling_factor*5.2pt;
+
+% This does the leftmost downstroke.
+pickup my_fill_pen; 
+pos0(nib,20);pos1(nib,15);pos2(nib,15);pos3(nib,15);
+top rt z0r = (25/64 nom_w, nom_h);
+top lft z1l = (11/128 nom_w, 5/64 nom_h);
+z2 = (dir (15-80) * whatever) shifted z1; 
+bot y2l = -1/32 nom_h;
+z3 = (dir 15 * whatever) shifted z2; 
+x3 = x2 + 5/128 nom_w;
+begingroup save a,b,c;
+
+
+a = 1.7;
+
+convert_path.p0 (z0e..tension a..z1e..z2e);
+
+
+if do_fill=true:
+filldraw p0;
+my_pen(15); draw z2..z3;
+fi;
+
+endgroup;
+
+% This does the forestroke.
+my_pen(45);
+pos4(nib,45);pos5(nib,45);
+lft z4 = (0, 115/128 nom_h); 
+z5 = (dir (45-100) * whatever) shifted z4; 
+y5l = 46/64 nom_h;
+
+if do_fill=true:
+draw z4..z5;
+fi;
+
+
+%% This does the leg.
+
+
+begingroup save a,b,c,e;
+
+
+a = 1.6;
+b = 1.5;
+c = 1; 
+e = 40;
+pickup my_fill_pen; 
+pos6(nib,40);pos7(nib,40);
+pos8(nib,40);pos9(nib,e);
+pos10(nib,e);
+
+z6 = point .45 of p0.m;
+z7 = (39/64 nom_w,55/64 nom_h);
+z8 = (48/64 nom_w, 7/64 nom_h );
+lft bot z9l = (46/64 nom_w, -4/64 nom_h);
+
+convert_path.p1 
+(z6e..tension a..z7e..tension b..z8e..tension c..z9e);
+
+if do_fill=true:
+around_crossing_pt(p1,0,3,x_pt_factor);
+fi;
+
+
+my_pen(e); 
+z10 = (dir e * whatever) shifted z9;
+rt x10 = nom_w;
+
+if do_fill=true:
+draw z9..z10;
+fi;
+
+endgroup;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.37pt,0);
+else:
+penlabels(range 0 thru 10);
+input nom_rules;
+fi
+
+endgroup;
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

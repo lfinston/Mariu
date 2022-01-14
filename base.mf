@@ -1,0 +1,76 @@
+%% base.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is .mf
+%special "grayfont black";
+beginchar("",pt#,pt#,pt#); "The letter ";
+clear_vars;
+scaling_factor = ;
+nom_w = scaling_factor*pt;
+nom_h = scaling_factor*pt;
+nom_d = scaling_factor*pt;
+
+
+
+
+
+
+
+do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,0pt,0pt);
+else:
+penlabels(range 0 thru 30);
+input nom_rules;
+%input nom_rules_extra;
+fi;
+
+
+
+
+endchar;
+
+%% This was in the local variables list. I seem not to need it, though.
+% mf-gf:"callig"
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+
+
+
+
+
+

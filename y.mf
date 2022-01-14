@@ -1,0 +1,151 @@
+%% y.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is y.mf
+% Revised Nov. 11, 1996 
+%special "grayfont black";
+beginchar("y",5.5pt#,6.5pt#,5.5pt#); "The letter y";
+clear_vars;
+
+do_fill:=true;
+%do_fill:=false;
+
+scaling_factor = 49/40;
+nom_w = scaling_factor*5.7pt;
+nom_h = scaling_factor*5.0pt;
+nom_d = scaling_factor*4.2pt;
+
+
+% This does the main stroke.
+
+pickup my_fill_pen;
+
+pos0(nib,35);pos1(nib,35);pos2(nib,35);
+pos3(nib,30);
+
+top rt z0r = (41/64 nom_w, nom_h);
+z1 = (67/128 nom_w,0);
+z2 = (27/64 nom_w,-43/64 nom_d);
+%z3 = (4/64 nom_w,-28/32 nom_d);
+z3 = (dir 215 * whatever) shifted z2; 
+y3 = -119/128 nom_d;
+
+convert_path.p0 
+(z0e{dir -115}..{dir -97.5}z1e..z2e..{dir 210}z3e);
+
+% The steps of p0:
+%       0    1    2    3    4    5    6    7
+% p0 = z0l..z1l..z2l..z3l--z3r..z2r..z1r..z0r--cycle;
+
+% This does the main stroke.
+
+begingroup save a,b,c;
+
+a=.26;
+
+if do_fill=true:
+filldraw subpath(0,2+a) of p0.l -- reverse subpath(0,2+a) of p0.r --cycle;
+fi;
+
+endgroup;
+
+
+
+% This does the outstroke.
+% It's cheating slightly.
+
+if do_fill=true:
+my_pen(30); draw subpath(2.5,3) of p0.m;
+fi;
+
+
+% This does the forestroke.
+% I'm not completely satisfied with it, but it's okay.
+
+begingroup
+save a,b,c;
+z6 = (24/64 nom_w, 111/128 nom_h);
+a=45;
+my_pen(a);
+z7 = (dir (a+90) * whatever) shifted z6; 
+x7 = 3/4 nom_w;
+p1 = z6..z7;
+z8 = p0.m intersectionpoint p1;
+
+if do_fill=true:
+draw z6..z8;
+fi;
+
+endgroup;
+
+% This does the the right hand curved stroke
+pickup my_fill_pen;	
+pos9(nib,30);pos10(nib,25);pos11(nib,25);
+
+rt z9r = (126/128 nom_w, 109/128 nom_h);
+
+x11l = .5[x1l,x1];
+y11r = 6/128 nom_h;
+z10 = (dir 25 * whatever) shifted z11; 
+x10 = x11 + 4/64 nom_w;
+
+convert_path.p2 (z9e{dir -80}..{dir -165}z10e{dir (180+25)}..{dir (180+25)}z11e);
+
+begingroup save a,b,c;
+
+a = .87;
+
+filldraw subpath(0,a) of p2.l -- reverse subpath(0,a) of p2.r -- cycle;
+pickup pensquare xscaled .75nib yscaled nib_thickness rotated 25;
+%pickup my_fill_pen;
+draw subpath(.9,2) of p2.m shifted (0,.11nib_thickness);
+%pickup my_fill_pen; draw p2;
+
+endgroup;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift(v0,-2pt,0);
+else:
+penlabels(range 0 thru 11);
+input nom_rules;
+fi
+
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

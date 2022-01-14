@@ -1,0 +1,136 @@
+%% p.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is p.mf
+% Revised Nov.  4, 1996.
+%special "grayfont black";
+beginchar("p",6pt#,7.4pt#,4pt#); "The letter p";
+clear_vars;
+do_fill:=true;
+%do_fill:=false;
+
+scaling_factor = 26/20;
+nom_w = scaling_factor*4.2pt;
+nom_h = scaling_factor*5.4pt;
+nom_d = scaling_factor*2.8pt;
+
+% This does the downstroke.
+
+begingroup save a,b,c;
+a = 40;
+pickup my_fill_pen;
+
+pos0(nib,a);pos1(nib,a);pos2(nib,a);pos3(nib,a);
+
+top rt z0r = (32/64 nom_w, nom_h);
+z1 = (dir (a + 180) * whatever) shifted z0; 
+lft x1l = 15/64 nom_w;
+lft bot z2l = (17/128 nom_w, - 63/64 nom_d);
+lft bot z3l = (13/64 nom_w, -nom_d);
+
+convert_path.p0 (z1e..tension 7..z2e..tension 1.5..z3e);
+
+b = .1125;
+if do_fill=true:
+filldraw subpath(0,2-b) of p0.l -- %
+reverse subpath(0,2-b) of p0.r -- cycle;
+fi;
+my_pen(a); draw z0..z1..point .1 of p0.m; 
+draw subpath (2-b,2) of p0.m;
+
+%% This does the forestroke
+c = 45;
+pickup my_fill_pen; 
+pos4(nib,c);pos5(nib,c);
+lft z4l = (2/64 nom_w, 51/64 nom_h);
+z5 = (dir (c-90) * whatever) shifted z4; 
+bot y5l = 87/128 nom_h;
+my_pen(c);
+draw z4..z5; 
+
+endgroup;
+
+%% This does the bowl.
+
+begingroup save a,b,c,f,g,i,j;
+
+
+
+pickup my_fill_pen; 
+pos6(nib,60);pos7(nib,60);pos8(nib,70);pos9(nib,75);pos10(nib,80);
+
+z6 = (16/64 nom_w, 25/64 nom_h);
+top rt z7r = (47/64 nom_w, 49/64nom_h);
+z8 = (105/128 nom_w, 13/64 nom_h);
+bot lft z9l = (35/64 nom_w, 1/128 nom_h);
+bot lft z10l = (0, 1/256 nom_h);
+
+a = 1.2; 
+b = 1.1;
+c = f = 1.2;
+
+
+convert_path.p1
+(z6e..tension a..z7e..tension b..z8e..tension c..z9e{left}..tension f..{left}z10e);
+
+%% The steps of p1.m:
+%%  0      1      2      3       4
+%% z6..a..z7..b..z8..c..z9..f..z10
+
+%% This works for all of the magnifications I'm using, which is 
+%% a bit surprising.
+
+if do_fill=true:
+around_crossing_pt(p1,0,1,x_pt_factor);
+around_crossing_pt(p1,1,4,x_pt_factor);
+fi;
+
+
+endgroup;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.4pt, 0);
+else:
+penlabels(range 0 thru 10);
+input nom_rules;
+fi;
+
+
+endchar;
+
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+

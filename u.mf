@@ -1,0 +1,122 @@
+%% u.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is u.mf
+% Revised Nov. 9, 1996
+do_fill:=true;
+%do_fill:=false;
+%special "grayfont black";
+beginchar("u",5pt#,6pt#,.7pt#); "The letter u";
+clear_vars;
+
+scaling_factor = 38/40;
+nom_w = scaling_factor*4.4pt;
+nom_h = scaling_factor*6.0pt;
+
+% This does the leftmost downstroke.
+pickup my_fill_pen; 
+
+pos0(nib,40);pos1(nib,45);pos2(nib,45);
+pos3(nib,50);pos4(nib,50);
+
+top rt z0r = (52/128 nom_w, 63/64 nom_h);
+lft z1l = (4/64 nom_w, 1/4 nom_h);
+bot lft z2l = (13/64 nom_w, 0 nom_h);
+z3 = (48/64 nom_w, 22/64 nom_h); 
+rt bot z4r = (58/64 nom_w, 35/64 nom_h);
+convert_path.p0 
+(z0e..z1e..tension 1.1..{dir -30}z2e{dir -20}..tension 1..z3e..z4e);
+
+if do_fill=true:
+around_crossing_pt(p0,0,3,x_pt_factor);
+fi;
+
+% This does the forestroke.
+
+begingroup save a,b,c;
+
+a = 47.5;
+
+pos5(nib,a);pos6(nib,a);
+top lft z5l = (0, 53/64 nom_h);
+z6 = (3/16 nom_w, 43/64 nom_h);
+
+if do_fill=true:
+my_pen(a); draw z5..z6;
+fi;
+
+endgroup;
+
+
+%% This does the down- and outstrokes on the right.
+
+
+pickup my_fill_pen; 
+pos7(nib,50);pos8(nib,47.5);pos9(nib,45);
+
+top rt z7r = (61/64 nom_w, nom_h);
+lft z8l = (93/128 nom_w, 32/64 nom_h);
+bot lft z9l = (46/64 nom_w, 0);
+
+convert_path.p1 
+(z7e{dir -87.5}..z8e{dir -98}..{dir -77.5}z9e);
+
+if do_fill=true:
+filldraw p1;
+fi;
+
+%% This does the outstroke
+
+pos10(nib,45);
+z10 = (60/64 nom_w, 2/256 nom_h);
+
+if do_fill=true:
+pickup pensquare xscaled 1.1nib yscaled nib_thickness rotated 45;
+draw z9..z10;
+fi;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.325pt, 0);
+else:
+penlabels(range 0 thru 10);
+input nom_rules;
+fi;
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

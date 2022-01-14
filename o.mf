@@ -1,0 +1,103 @@
+%% o.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+%% This is o.mf
+%% Revised Nov. 3, 1996.
+%% Pretty close to my drawing, but not quite perfect.
+%special "grayfont black";
+
+beginchar("o",5.3pt#,6.05pt#,0pt#); "The letter o";
+clear_vars;
+do_fill:=true;
+%do_fill:=false;
+scaling_factor = 24/20;
+nom_w = scaling_factor*3.7pt;
+nom_h = scaling_factor*4.6pt;
+
+pickup my_fill_pen; 
+pos0(nib,60);
+pos1(nib,55);pos2(nib,45);pos3(nib,45);
+pos4(nib,42.5);pos5(nib,40);
+top rt z0r = (29/64 nom_w,nom_h);
+bot lft z1l = (50/64 nom_w, 38/64 nom_h);
+rt z2r = (64/64 nom_w, 18/64 nom_h);
+bot lft z3l = (35/64 nom_w, -2/64 nom_h);
+y4 = 5/8 nom_h;
+lft x4l = 1/64 nom_w;
+top rt z5r = (13/32 nom_w, 31/32 nom_h);
+
+
+begingroup
+save a,b,c,f,g;
+a = 1.2;
+b = 1.3;
+c = 1;
+%% Can't use e, because e is used in convert_path.
+f = 1.075;
+g = 1.2;
+
+% The middle path
+convert_path.p0
+(z0e..tension a..z1e..tension b..z2e..tension c..
+z3e..tension f ..z4e..tension g..z5e);
+
+%% The steps of p0:
+%% 0    1    2    3    4    5    6    7
+%% z0l..z1l..z2l..z3l--z3r..z2r..z1r..z0r--cycle;  
+
+if do_fill=true:
+around_crossing_pt(p0,0,5,x_pt_factor);
+fi;
+
+
+endgroup;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0, .375pt, 3/128 nom_h);
+else:
+penlabels(range 0 thru 5);
+input nom_rules;
+fi;
+
+endchar;
+
+
+
+
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+

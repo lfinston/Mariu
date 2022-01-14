@@ -1,0 +1,166 @@
+%% E.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is E.mf
+
+special "grayfont black";
+
+%% Is this a capital or an uncial used as a capital?
+
+beginchar("E",5.9pt#,10pt#,1pt#); "The letter E";
+%% Maybe I should rename it uncial e?
+clear_vars;
+scaling_factor = 21/20;
+letter_shift_string ="letter_shift (v0,.5pt,-.6pt);";
+
+
+%do_fill:=false;
+do_fill:=true;
+
+nom_w = scaling_factor*4.7pt;
+nom_h = scaling_factor*9.1pt;
+
+%% This does the main stroke.
+
+pickup my_fill_pen; 
+
+pos0(nib,45);pos1(nib,45);pos2(nib,45);
+pos3(nib,45);
+pos4(nib,47.5);
+pos5(nib,50);
+pos6(nib,50);pos7(nib,70);
+
+rt top z0r = (128/128 nom_w, 97/128 nom_h);
+rt top z1r = (48/64 nom_w, 123/128 nom_h);
+rt top z2r = (67/128 nom_w, 355/356 nom_h);
+rt top z3r = (21/64 nom_w, 60/64 nom_h);
+rt top z4r = (14/64 nom_w, 49/64 nom_h);
+lft z5l = (1/128nom_w, 13/64 nom_h);
+bot lft z6l = (23/64 nom_w, 0);
+top rt z7r = (103/128 nom_w, 37/128 nom_h);
+
+begingroup save a,b,c,f,g,i;
+numeric a[],b[],c[],d[],f[],g[],i[],j[];
+a=2;
+b=1;
+c=1
+f=1;
+g=1.5;
+i=1;
+j=1.1;
+
+convert_path.p0(z0e..tension a..z1e..tension b..z2e..tension c..z3e..%
+tension f..z4e..%
+tension g..z5e..%
+tension i..z6e..tension j..{dir 95}z7e);
+
+endgroup;
+
+if do_fill=true:
+pickup my_fill_pen;
+around_crossing_pt(p0,0,6.25,x_pt_factor);
+else:
+pickup my_fill_pen; 
+draw p0;
+fi;
+
+draw subpath(6.25,7) of p0.l--reverse subpath(6.25,7) of p0.r;
+
+%% This does the end of the main stroke at the bottom right.
+%% It's an inelegant solution to the problem of filling the narrow
+%% section without getting strange path error messages. 
+
+if do_fill=true:
+begingroup save k;
+pickup my_fill_pen; 
+draw subpath(6.2,6.6) of p0.l--reverse subpath(6.2,6.6) of p0.r;
+for k =6.3 step .05 until 6.6:
+draw point k of p0.r--point k of p0.l;
+endfor;
+endgroup;
+fi;
+
+%% This does the forestroke
+
+if do_fill=true:
+begingroup save a,b,c;
+a=40;
+z8 = (44/64nom_w, 78/128nom_h);
+z9 = (dir a * whatever) shifted z8; 
+x9 = x0 - 1/128 nom_w;
+z10 = z9 shifted (0,2/64nom_h);
+
+my_pen(a); draw z8{dir a}..z10;
+endgroup;
+fi;
+
+%% This does the crossbar
+
+if do_fill=true:
+begingroup save a,b,c;
+a=80;
+pickup my_fill_pen; 
+pos11(nib,a);pos12(nib,a);
+top rt z11r = (4/64 nom_w, 32/64 nom_h);
+top rt z12r = (107/128 nom_w, 131/256 nom_h);
+z13 = (dir a * whatever) shifted z12;
+y13 = y12 - 3/128 nom_h;
+filldraw z11l..z12l--z12r..z11r--cycle;
+my_pen(a); draw z12..z13;
+endgroup;
+fi;
+
+if do_letter_shift = true:
+%do_letter_shift := false;
+do_rules := false;
+scantokens letter_shift_string;
+else:
+penlabels(range 0 thru 30);
+input nom_rules;
+%input nom_rules_extra;
+fi;
+
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+
+
+
+
+
+
+
+

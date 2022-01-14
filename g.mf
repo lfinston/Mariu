@@ -1,0 +1,109 @@
+%% g.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is g.mf
+%% Revised Oct 12, 1996
+%special "grayfont black";
+beginchar("g",5.75pt#,6.125pt#,2.65pt#); "The letter g";
+clear_vars;
+scaling_factor = 21/20;
+nom_w = scaling_factor*4.4pt;
+nom_h = scaling_factor*5.25pt;
+nom_d = scaling_factor*2.8pt;
+extra_under_width = scaling_factor*3.3pt;
+
+do_fill:=true;
+%do_fill:=false;
+
+
+pickup my_fill_pen; 
+bot z0l = (54/64 nom_w, 0);
+lft bot z1l = (0, 5/16 nom_h);
+top z2r = (1/2 nom_w, 16/16 nom_h);
+top z3r = (58/64 nom_w, 48/64 nom_h);
+lft z4l = (50/64 nom_w, 0);
+z5 = (41/64 nom_w, -5/8 nom_d);
+z6 = (-.5 nom_w, -7/8 nom_d);
+
+pos0(nib,70);pos1(nib,70);pos2(nib,70);
+pos3(nib,55);
+pos4(nib,45);pos5(nib,40);pos6(nib,35);
+
+
+convert_path.p0
+(z0e..tension 1.5 and 1..z1e..tension 1.2..z2e..z3e..tension 1.1 and 1.3..z4e..z5e..{dir 215}z6e);
+
+
+% The steps of p0:
+%     0    1    2    3    4    5    6    7    8    9    10   11   12   13
+%p0= z0l..z1l..z2l..z3l..z4l..z5l..z6l--z6r..z5r..z4r..z3r..z2r..z1r..z0r--cycle;
+
+% Drawing commands
+
+if do_fill=true:
+filldraw subpath(0,1) of p0.l -- %
+reverse subpath(0,1) of p0.r -- cycle;
+
+filldraw subpath(2,4) of p0.l -- %
+reverse subpath(2,4) of p0.r -- cycle;
+
+around_crossing_pt(p0,1,2,x_pt_factor);
+
+around_crossing_pt(p0,4,5.5,.015);
+
+begingroup save a;
+a = .025;
+filldraw subpath(5.5,6-a) of p0.l -- %
+reverse subpath(5.5, 6-a) of p0.r -- cycle;
+endgroup;
+my_pen(35); drawdot z6;
+fi;
+
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.6pt,0);
+else:
+penlabels(range 0 thru 100);
+input nom_rules_extra;
+fi;
+
+endchar;
+
+
+% Local Variables:
+% outline-regexp:"*"
+% auto-save-interval:0
+% End:
+
+
+
+
+

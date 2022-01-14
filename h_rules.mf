@@ -1,0 +1,83 @@
+%% h_rules.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+%% This is h_rules.mf. It makes proofrules for 
+%% the letter h.
+
+if unknown nom_d: nom_d = 0; fi;
+if unknown extra_under_width: extra_under_width = 0; fi;
+if unknown extra_over_width: extra_over_width = 0; fi;
+
+% vertical rules:
+
+begingroup 
+save a,b;
+
+% b divides the nominal box by b.
+
+b = 4;
+for a=0 upto b:
+
+proofrule(((a/b)*nom_w,-nom_d),((a/b)*nom_w,nom_h));
+endfor;
+
+b := 8;	
+for a = 0 upto b:	
+
+% horizontal rules:
+proofrule((0,(a/b)*nom_h),(nom_w,(a/b)*nom_h));
+
+endfor;
+
+% horizontal rules for y<0 (depth):
+b := 2;
+for a= 0 upto b:
+proofrule((0,(a/b)*(-nom_d)),(nom_w,(a/b)*(-nom_d)));
+endfor;
+
+
+
+
+
+proofrulethickness .5mm#;
+proofrule((0,.5 nom_h),(nom_w,.5 nom_h));
+proofrule((0,0),(nom_w,0));
+
+endgroup;
+
+
+
+
+
+
+
+
+
+
+

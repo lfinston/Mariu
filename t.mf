@@ -1,0 +1,111 @@
+%% t.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is t.mf
+% Revised Nov. 7, 1996.
+%special "grayfont black";
+beginchar("t",4.45pt#,6.75pt#,.375pt#); "The letter t";
+clear_vars;
+do_fill:=true;
+%do_fill:=false;
+
+scaling_factor = 47/40;
+nom_w = scaling_factor*3.2pt;
+nom_h = scaling_factor*5.5pt;
+% This does the main stroke, a downstroke with an upward
+% curve at the end.
+
+pickup my_fill_pen; 
+pos0(nib,65);pos1(nib,65);pos2(nib,60);pos3(nib,60);
+pos4(nib,60);pos5(nib,65);
+top rt z0r = (31/64 nom_w, nom_h);
+top lft z1l = (33/128 nom_w, 32/64 nom_h);
+bot lft z2l = (22/64 nom_w, 0 nom_h);
+bot lft z3l = (26/64 nom_w, -3/128 nom_h);
+bot lft z4l = (29/64 nom_w, -2/128 nom_h);
+bot rt z5r = (54/64 nom_w, 17/64 nom_h);
+
+begingroup save a,b,c,f,g,i,j;
+
+a = 1;
+b = 1.5;
+c = 1;
+g = 1.3;
+i = 1.3;
+
+convert_path.p0
+(z0e..tension a..z1e..tension b..z2e..tension c..z3e..tension g..z4e{dir 10}%
+..%
+tension i..{dir 60}z5e);
+
+
+endgroup;
+
+if do_fill=true:
+%% my_fill_pen already picked up.
+%% pickup my_fill_pen; 
+filldraw p0;
+fi;
+
+% This does the crossbar.
+
+pickup my_fill_pen; 
+pos6(nib,75);pos7(nib,75);pos8(nib,75);
+top lft z6l = (0, 87/128 nom_h);
+lft bot z7l = (39/64 nom_w, y6l); 
+bot rt z8r = (nom_w, 107/128 nom_h); 
+
+convert_path.p1 (z6e{dir 12.5}..z7e{dir 12.5}..{dir -12.5}z8e);
+
+if do_fill=true:
+%%pickup my_fill_pen; 
+filldraw p1;
+fi;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.35pt,0);
+else:
+penlabels(range 0 thru 8);
+input nom_rules;
+fi;
+
+endchar;
+
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

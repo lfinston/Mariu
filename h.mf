@@ -1,0 +1,164 @@
+%% h.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is h.mf
+% Revised Oct 14, 1996.
+%special "grayfont black";
+
+%do_fill:=false;
+do_fill:=true;
+
+beginchar("h",5.125pt#,9.3pt#,2.25pt#); "The letter h";
+
+clear_vars;
+scaling_factor = 39/40;
+nom_w = scaling_factor*5.2pt;
+nom_h = scaling_factor*9.05pt;
+nom_d = scaling_factor*1.9pt;
+
+% Downstroke:
+
+pickup my_fill_pen; 
+rt top z0r = (34/64 nom_w,127/128 nom_h);
+lft bot z2l = (25/128 nom_w, 1/128 nom_h);
+z1 = (18/64 nom_w, 5/64 nom_h);
+
+pos0(nib,5);pos1(nib,10);pos2(nib,10);
+
+convert_path.p0(z0e{dir -103}..{down}z1e..z2e);
+
+%% This does the "serif" at the top of the downstroke. 
+
+z13 = z0 shifted (-1/128 nom_w, 0);
+
+z3 = (dir 5 * whatever) shifted z0; 
+x3 = x0 + 3/64 nom_w;
+
+if do_fill=true:
+my_thick_pen(5);
+draw z13--z3;
+
+fi;
+
+%% This does the "serif" at the bottom of the downstroke.
+
+my_pen(10); 
+z4 = (dir 10 * whatever) shifted z2; 
+rt x4 = 31/64 nom_w;
+
+if do_fill=true:
+draw z1..tension 2..z2..tension 2..z4;
+fi;
+
+if do_fill=true:
+pickup my_fill_pen; 
+filldraw p0;
+fi;
+
+%% Forestroke:
+
+
+begingroup save a,b,c;
+
+a = 47.5;
+
+my_pen(a);
+top rt z5 = (18/64 nom_w, 125/128 nom_h); 
+z6 = (dir (a-100) * whatever) shifted z5; 
+x6 = 3/8 nom_w;
+
+
+if do_fill=true:
+draw z5..z6;
+fi;
+
+endgroup;
+
+
+%% The leg. Is this the correct term?
+
+pickup my_fill_pen;
+z7 = (19/64 nom_w,24/64 nom_h);
+z8 = (50/64 nom_w, 41/64 nom_h);
+z9 = (55/64 nom_w, 21/64 nom_h);
+z10 = (35/64 nom_w, 0); 
+bot lft z11l = (34/64 nom_w, -nom_d);
+rt top z12r = (61/64 nom_w, -1/128 nom_h);
+
+pos7(nib,45);pos8(nib,45);pos9(nib,50);pos10(nib,50);
+pos11(nib,45);pos12(nib,40);
+convert_path.p1
+(z7e..tension 3 and 1..z8e..tension 1.15..z9e..z10e..z11e%
+..tension 1.4..z12e);
+
+%%% The steps of p1
+%% 0    1    2     3     4     5 
+%%z7l..z8l..z9l..z10l..z11l..z12l--%
+%%  6     7     8    9    10   11
+%%z12r..z11r..z10r..z9r..z8r..z7r--cycle;
+
+if do_fill=true:
+around_crossing_pt(p1,0,1,x_pt_factor);
+around_crossing_pt(p1,1,5,x_pt_factor);
+fi;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift(v0,-.35pt,0);
+else:
+penlabels(range 0 thru 100);
+input h_rules;
+fi;
+
+
+endchar;
+
+% Abbrevs:
+% nh = nom_h 
+% nw = nom_w 
+% nd = nom_d 
+% sf = scaling_factor
+% xf = x_pt_factor 
+% itimes = intersectiontimes 
+% z = (z). Use by typing "z", then a space, then C-x C-e to call 
+% the function z, which puts in the next number for a point.
+% p = (p). This works analogously to z.
+
+
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

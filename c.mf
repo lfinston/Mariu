@@ -1,0 +1,112 @@
+%% c.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is c.mf
+% Revised 5.9.96
+%special "grayfont black";
+beginchar("c",5.75pt#,6.5pt#,0); "The letter c";
+do_fill:=true;
+%do_fill:=false;
+clear_vars;
+scaling_factor = 23/20;
+nom_w = scaling_factor*4pt;
+nom_h=scaling_factor*4.7pt;
+
+% This does the main stroke.
+pickup my_fill_pen; 
+rt top z0r = (67/128 nom_w,132/128 nom_h);
+lft z1l = (8/128 nom_w,83/128 nom_h);
+bot lft z2l = (16/64 nom_w,-1/256 nom_h);
+bot lft z3l = (48/64 nom_w,0 nom_h);
+rt top z4r = (68/64 nom_w,18/64 nom_h);
+
+outer_pt_and_pos (0,50);
+outer_pt_and_pos (1,50);
+outer_pt_and_pos (2,50);
+outer_pt_and_pos (3,55);
+outer_pt_and_pos (4,57.5);
+
+convert_path_outers.p0 (z0e..z1e..tension 1.1..z2e..tension 1..z3e..z4e);
+
+% The steps of p0:
+%      0    1    2    3    4    5    6    7    8    9
+%p0 = z0l..z1l..z2l..z3l..z4l--z4r..z3r..z2r..z1r..z0r--cycle;
+
+% This does the beginning of the main stroke, where there would otherwise
+% be a crossing point.
+
+if do_fill=true:
+my_pen(50); draw subpath(0,1) of p0.m;
+fi;
+
+% This does the rest of the main stroke.
+if do_fill=true:
+pickup my_fill_pen; 
+filldraw subpath(1,4) of p0 -- subpath(5,8) of p0 -- cycle;
+fi;
+
+% This does the forestroke.
+
+pickup my_fill_pen; 
+top rt z5r = (50/128 nom_w,131/128 nom_h);
+bot lft z6l = (36/64 nom_w,93/128 nom_h);
+bot lft z7l = (48/64 nom_w,45/64 nom_h);
+
+outer_pt_and_pos(5,65);
+outer_pt_and_pos(6,65);
+outer_pt_and_pos(7,65);
+
+convert_path_outers.p1 (z5e..z6e..z7e);
+
+if do_fill=true:
+pickup my_fill_pen; filldraw p1;
+fi;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.45pt,7/128 nom_h);
+else:
+penlabels(range 0 thru 100);
+input nom_rules;
+fi;
+
+endchar;
+
+
+% Local Variables:
+% fill-column:60
+% outline-regexp:"*"
+% auto-save-interval:0
+% End:
+
+
+
+
+

@@ -1,0 +1,146 @@
+%% r.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is r.mf
+% Revised Nov.  4, 1996.
+%special "grayfont black";
+
+do_fill:=true;
+%do_fill:=false;
+
+beginchar("r",4.6pt#,6.2pt#,0pt#); "The letter r";
+clear_vars;
+scaling_factor = 45/40;
+nom_w = scaling_factor*3.6pt;
+nom_h = scaling_factor*5.2pt;
+
+% This does the downstroke.
+
+begingroup save a,b,c,f,g,h,i;
+
+a = 1;
+b = 1;
+c = 1.4;
+f = 1;
+g = 1;
+
+pickup my_fill_pen; 
+pos0(nib,40);pos1(nib,42.5);pos2(nib,42.5);pos3(nib,40);pos4(nib,40);
+pos5(nib,40);
+
+top rt z0r = (59/128 nom_w, nom_h);
+z1 = (dir -90 * whatever) shifted z0; 
+y1r = 46/64 nom_h;
+bot lft z2l = (13/64 nom_w, 16/64 nom_h);
+bot lft z3l = (23/64 nom_w, -1/128 nom_h);
+z4 = (dir 0 * whatever) shifted z3; 
+x4 = x3 + 5/128 nom_w;
+z5 = (dir 40 * whatever) shifted z4; 
+rt x5r = 3/4 nom_w;
+
+convert_path.p0
+(z0e..tension a..z1e{dir -95}..tension b..z2e..tension c..%
+z3e..tension f..z4e..tension g..{z5-z4}z5e);
+
+if do_fill=true:
+filldraw subpath(0,4) of p0.l -- %
+reverse subpath(0,4) of p0.r -- cycle;
+my_pen(40); draw z4..z5;
+fi;
+
+endgroup;
+
+%% This does the forestroke
+
+begingroup save a,b,c;
+
+a = 50;
+
+
+pickup my_fill_pen;
+
+pos6(nib,a);pos7(nib,a);
+
+lft top z6l = (0, 53/64 nom_h);
+z7 = (dir (45-92.5) * whatever) shifted z6; 
+rt x7r = 29/64 nom_w;
+
+if do_fill=true:
+my_pen(a); draw z6..z7;
+fi;
+
+endgroup;
+
+%% This does the arm.
+
+pickup my_fill_pen; 
+pos8(nib,40);pos9(nib,40);
+z8 = (3/8 nom_w, 46/64 nom_h);
+z9 = (dir 40 * whatever) shifted z8; 
+rt x9r = 41/64 nom_w;
+
+if do_fill=true:
+my_pen(45); draw z8..z9;
+fi;
+
+begingroup save a,b,c;
+
+a = 52.5;
+
+pickup my_fill_pen; 
+pos10(nib,a);pos11(nib,a);
+top rt z10r = (42/64 nom_w, 62/64 nom_h);
+bot rt z11r = (nom_w, 100/128 nom_h);
+
+if do_fill=true:
+my_pen(a); draw z10..z11;
+fi;
+
+endgroup;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.275pt, 0);
+else:
+penlabels(range 0 thru 11);
+input nom_rules;
+fi;
+
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

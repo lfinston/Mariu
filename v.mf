@@ -1,0 +1,105 @@
+%% v.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is v.mf
+% Revised Nov. 11, 1996 
+%special "grayfont black";
+
+do_fill:=true;
+%do_fill:=false;
+
+beginchar("v",4.6pt#,6pt#,0pt#); "The letter v";
+clear_vars;
+scaling_factor = 21/20;
+nom_w = scaling_factor*3.9pt;
+nom_h = scaling_factor*5.5pt;
+
+pickup my_fill_pen; 
+
+top rt z0r = (47/64 nom_w, 52/64 nom_h);
+top rt z1r = (63/64 nom_w, 32/64 nom_h);
+rt z2r = (63/64 nom_w, 3/8 nom_h);
+bot lft z3l = (31/64 nom_w, 0);
+lft z4l = (1/128 nom_w, 23/64 nom_h);
+top rt z5r = (31/64 nom_w, nom_h);
+
+pos0(nib,55);
+pos1(nib,55);
+pos2(nib,55);
+pos3(nib,55);
+pos4(nib,55);
+pos5(nib,50);
+
+begingroup
+save a,b,c;
+
+a=1.5;b=1.3;c=1.1;
+
+convert_path.p0 
+(z0e..tension a..z1e..tension b..z2e..tension c..z3e..z4e..z5e); 
+
+endgroup;
+
+%% This works for all magnifications.
+if do_fill=true:
+around_crossing_pt(p0,0,4.725,x_pt_factor);
+pickup pensquare xscaled .9nib yscaled nib_thickness rotated 50; 
+draw subpath(4,5) of p0.m;
+else;
+pickup my_fill_pen; draw p0;
+fi;
+
+
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.275pt, 0);
+else:
+penlabels(range 0 thru 5);
+input nom_rules;
+fi;
+
+
+
+
+
+
+endchar;
+
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

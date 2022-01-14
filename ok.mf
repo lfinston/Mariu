@@ -1,0 +1,181 @@
+%% ok.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is ok.mf
+% Revised Nov. 23, 1996
+%special "grayfont black";
+do_fill:=true;
+%do_fill:=false;
+beginchar("&",5.75pt#,6pt#,0); "The letter Tironian &";
+
+clear_vars;
+scaling_factor = 37/40;
+nom_w = scaling_factor*5.4pt;
+nom_h = scaling_factor*6.1pt;
+
+%% This does the forestroke.
+
+
+my_pen(45); 
+bot lft z0 = (0, 55/64 nom_h);
+bot lft z1 = (7/64 nom_w, 46/64 nom_h);
+
+if do_fill=true:
+draw z0..z1;
+fi;
+
+pickup my_fill_pen; 
+pos1(nib,45);
+pos2(nib,45);
+pos3(nib,45);
+pos4(nib,45);
+pos5(nib,45);
+pos6(nib,40);
+pos7(nib,40);
+pos8(nib,45);
+
+%% This does the main stroke.
+
+%% z1 is already defined for the forestroke.
+
+top rt z2r = (27/64 nom_w, 124/128 nom_h);
+top rt z3r = (91/128 nom_w, 48/64 nom_h);
+z4 = (21/64 nom_w, 27/64 nom_h);
+bot lft z5l = (6/64 nom_w, 4/64 nom_h);
+bot lft z6l = (30/64 nom_w, 1/64 nom_h);
+top rt z7r = (60/64 nom_w, 19/64 nom_h);
+bot rt z8r = (nom_w, 1/4 nom_h);
+
+begingroup save a,b,c,f,g,i,j,k;
+
+a = infinity;
+b = 1.5;
+c = 1.5;
+f = 1;
+g = 1;
+i = 1.2;
+j = 1.1;
+
+convert_path.p0
+(z1e..tension a..z2e..tension b..z3e..%
+tension c ..z4e..tension f..z5e..tension i..z6e..%
+tension j..z7e);
+
+%% The steps of p0:
+
+%%  0   1   2   3   4   5   6
+%% z1..z2..z3..z4..z5..z6..z7
+
+my_pen(45);
+
+if do_fill=true:
+draw subpath(0,4) of p0.m;
+fi;
+
+pickup my_fill_pen; 
+if do_fill=true:
+filldraw subpath(4,5.5) of p0.l -- %
+reverse subpath(4,5.5) of p0.r -- cycle;
+fi;
+
+endgroup;
+
+convert_path.p1(z7e..z8e);
+if do_fill=true:
+filldraw p1;
+fi;
+
+pickup pensquare xscaled 1.125nib yscaled nib_thickness rotated 45; 
+
+if do_fill=true:
+draw subpath(2,4) of p0.m;
+fi;
+
+	
+%pickup my_fill_pen; draw p0;
+
+
+
+%% This does the crossbar
+pickup my_fill_pen; 
+pos9(nib,87.5);pos10(nib,87.5);
+pos11(nib,85);
+
+top lft z9r = (6/64 nom_w, 65/128 nom_h);
+z10 = (dir 0 * whatever) shifted z9; 
+x10 = x9 + 1/16 nom_w;
+top rt z11r = (46/64 nom_w, 37/64 nom_h);
+
+convert_path.p2(z9e..z10e..{dir 0}z11e);
+
+if do_fill=true:
+filldraw p2;
+fi;
+
+z12 = (dir (85-180) * whatever) shifted z11.l; 
+y12 = y11.l - 7/128 nom_h;
+
+
+p3 =  z11..z12;
+p4 = p3 shifted (1/64 nom_w, -1/128 nom_h);
+
+if do_fill=true:
+cutdraw p4;
+fi;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift(v0, .4pt, 0);
+else:
+penlabels(range 0 thru 34);
+input nom_rules;
+fi;
+
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

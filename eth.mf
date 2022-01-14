@@ -1,0 +1,143 @@
+%% eth.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is eth.mf 
+% Revised 28.9.96
+special "grayfont black";
+%beginchar(oct"1",6.75pt#,9pt#,0pt#); "The letter eth";
+
+%% This is for making an illustration. It makes the bounding box the same 
+%% size as the nominal box.
+beginchar(oct"1",26/20*6.2pt#,26/20*6.4pt#,0pt#); "The letter eth";
+clear_vars;
+
+do_fill:=true;
+%do_fill:=false;
+
+scaling_factor = 26/20;
+nom_w = scaling_factor*6.2pt;
+nom_h = scaling_factor*6.4pt;
+
+% Pen positions.
+
+pos0(nib,50);pos1(nib,50);pos2(nib,35);
+pos3(nib,35);
+pos4(nib,52.5);pos5(nib,40);pos6(nib,45);
+
+
+lft z0l = (0,98/128 nom_h);
+y1l = 41/64 nom_h;
+z1 = (dir -40  * whatever) shifted z0;
+rt x2r = nom_w;
+y2 = 17/64 nom_h;
+bot z3l = (72/128 nom_w,-1/128 nom_h);
+z4 = (26/64 nom_w,17/64 nom_h);
+top rt z5r = (115/128 nom_w,61/64 nom_h);
+bot lft z6l = (18/64 nom_w,44/64 nom_h);
+
+convert_path.p0 
+(z0e..z1e{dir -15}..z2e..z3e..{dir 90}z4e..tension 1.2..{dir 121}z5e{dir 140}..{dir 232.5}z6e);
+
+% The steps of p0:
+%  0    1    2    3    4    5    
+% z0l..z1l..z2l..z3l..z4l..z5l.. z6l -- etc.
+
+%pickup my_fill_pen; draw p0;
+
+% This does the easy part, without a crossing point
+
+if do_fill=true:
+pickup my_fill_pen; 
+filldraw subpath(0,2) of p0.l -- subpath(2,0) of p0.r -- cycle;
+fi;
+
+% This does the end of the stroke, between z5 and z6.
+
+if do_fill=true:
+begingroup save a,b,c;
+a=.25;
+filldraw subpath(5,6-a) of p0.l -- %
+subpath(6-a,5) of p0.r -- cycle;
+endgroup;
+fi;
+
+
+%pickup my_fill_pen; draw p0;
+
+
+% This does the crossing point between z2 and z4.
+
+if do_fill=true:
+pickup my_fill_pen; 
+around_crossing_pt(p0,2,4,x_pt_factor);
+fi;
+
+% This does the part from z4 to z6.
+
+if do_fill=true:
+my_pen(52.5);
+draw subpath(4,4.9) of p0.m;
+pickup my_fill_pen; 
+begingroup save a,b,c;
+a = .39;
+b = .29;
+filldraw subpath(5-a,6-b) of p0.l -- %
+reverse subpath(5-a,6-b) of p0.r--cycle;
+
+endgroup;
+
+pickup pensquare xscaled 1.25nib 
+yscaled nib_thickness rotated 50; 
+draw subpath(5.9,6) of  p0.m shifted (.4125nib_thickness * dir (50-90));
+fi;
+
+
+
+
+do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,-2.1250pt,0);
+else:
+penlabels(range 0 thru 30);
+input nom_rules;
+fi;
+
+endchar;
+
+% Local Variables:
+% fill-column:60
+% outline-regexp:"*"
+% auto-save-interval:0
+% End:
+
+
+
+
+

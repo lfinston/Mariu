@@ -1,0 +1,137 @@
+%% J.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is J.mf
+
+%% Based on drawing at lower right.
+
+special "grayfont black";
+beginchar("J",6pt#,9pt#,4.5pt#); "The letter J";
+clear_vars;
+scaling_factor = 23/20;
+nom_w = scaling_factor*4.7pt;
+nom_h = scaling_factor*7.8pt;
+nom_d = scaling_factor*3.8pt;
+
+
+do_fill:=true;
+%do_fill:=false;
+
+
+%% This does the main stem
+
+begingroup save a,b,c;
+
+a=45;
+b = 1.25;
+c = 1.25;
+
+
+pickup my_fill_pen; 
+pos0(nib,45); pos2(nib,45);pos4(nib,45);
+pos5(nib,40);
+pos6(nib,35);
+pos8(nib,a);pos10(nib,a);
+
+top rt z0r = (nom_w, nom_h);
+lft z2l = (39/64 nom_w, 1/2 nom_h);
+bot lft z4l = (48/64 nom_w, -16/64 nom_d);
+z5 = (93/128 nom_w, -47/64 nom_d);
+bot lft z6l = (26/64 nom_w, -nom_d);
+bot lft z8l = (0 nom_w, -36/64 nom_d);
+top rt z10r = (15/64 nom_w, -3/64 nom_d);
+
+
+convert_path.p0(z0e..z2e..z4e..tension b and c..%
+z5e..z6e..{up}z8e..{dir a}z10e);
+
+
+
+
+
+if do_fill=true:
+around_crossing_pt(p0,0,5,x_pt_factor);
+else:
+draw p0;
+fi;
+
+if do_fill=true:
+my_pen(a);
+draw subpath(5,6) of p0.m;
+fi;
+
+%% This does the serif at the top of the main stroke:
+
+endgroup;
+
+begingroup save a,b,c;
+
+a = 50;
+b = 5;
+my_pen(a);
+
+rt z11 = (46/64 nom_w, 59/64 nom_h);
+z12 = (dir -(a + b) * whatever) shifted z11; 
+x12 = 50/64 nom_w;
+
+if do_fill=true:
+draw z11..z12;
+fi;
+
+endgroup;
+
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.5pt,0pt);
+else:
+penlabels(range 0 thru 30);
+input nom_rules;
+%input nom_rules_extra;
+fi;
+
+
+
+
+endchar;
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+
+
+
+
+
+

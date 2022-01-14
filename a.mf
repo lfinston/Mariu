@@ -1,0 +1,156 @@
+%% a.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is a.mf
+% Revised 2.9.96
+special "grayfont black";
+
+%% This is the way it is normally, for making a font.
+beginchar("a",5.25pt#,6.75pt#,0); "The letter a";
+
+%% This is for certain of my illustrations.
+%beginchar("a",16/20*5pt#,16/20*7.35pt#,0); "The letter a";
+
+clear_vars;
+scaling_factor = 16/20;
+nom_w= scaling_factor*5pt; 
+nom_h= scaling_factor*7.35pt;
+
+%do_fill:=false;
+do_fill:=true;
+
+% points
+
+pickup my_fill_pen;
+
+% these points are for the bowl:
+z0=(54/64 nom_w,31/64 nom_h);
+z1=(40/64 nom_w,35/64 nom_h);
+z2=(7/64 nom_w, 33/64 nom_h);
+bot z3l = (24/64 nom_w,-7/256 nom_h);
+y4 = 8/64 nom_h;
+x4r = 63/64 nom_w;
+% position commands:
+% for the bowl:
+
+pos0(nib,55); pos1(nib,55); pos2(nib,55); 
+pos3(nib,50); pos4(nib,50);
+
+% paths:
+% This is the path for the bowl:
+
+begingroup save a,b,c;
+a = 1.2;
+convert_path.p0 
+(z0e..tension 2..z1e..tension a..z2e{dir -120}..tension 1.2..{dir 0}z3e..z4e);
+endgroup;
+
+
+% The steps of p0:
+% 0    1    2    3    4    5    6    7    8    9    
+%z0l..z1l..z2l..z3l..z4l--z4r..z3r..z2r..z1r..z0r--cycle
+
+% This does the crossing point at the left upper part
+% of the bowl.
+
+
+
+% This works for all the magnifications I'm currently using
+
+if do_fill = true:
+  around_crossing_pt(p0,0,4,x_pt_factor);
+ else:
+  pickup my_fill_pen; draw p0;
+fi;
+
+
+
+% The upstroke and downstroke:
+
+% pos commands:
+
+pos5(nib,70); pos6(nib,70);
+pos7(nib,60); pos8(nib,30);
+pos9(nib,40); pos10(nib,40);
+
+% points:
+
+y5 = 39/64 nom_h;
+x5r = 1/4 nom_w;
+x6=1/3nom_w;
+y6=.8[y5,y7];
+
+z7r=(43/64 nom_w,127/128 nom_h);
+z8r=(131/128 nom_w,30/64 nom_h);
+z9r=(65/64 nom_w,4/64nom_h);
+z10=(dir -40 * whatever) shifted z9;  
+y10=-1/64nom_h;
+
+convert_path.p1
+(z5e..tension 1.1..z6e..z7e..tension 1.1..z8e..{dir -85}z9e..tension 3..z10e);
+
+% The steps of p1:
+%  0    1    2    3    4     5     6    7    8    9    10   11
+% z5l..z6l..z7l..z8l..z9l..z10l--z10r..z9r..z8r..z7r..z6r..z5r--cycle
+
+if do_fill:
+filldraw subpath(1,10) of p1--cycle;
+else:
+pickup tiny_pen; draw p1;
+fi;
+
+if do_fill=true:
+my_pen(70);
+draw subpath(0,1) of p1.m;
+fi;
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.575pt,0);
+else:
+penlabels(range 0 thru 10);
+input nom_rules;
+%input nom_rules_extra;
+fi;
+
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% mf-gf:"callig"
+% End:
+
+
+
+
+
+
+

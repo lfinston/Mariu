@@ -1,0 +1,183 @@
+%% x.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is x.mf
+%special "grayfont black";
+beginchar("x",8.1pt#,6pt#,1pt#); "The letter x";
+clear_vars;
+letter_shift_string ="letter_shift (v0,.4pt,0);";
+scaling_factor = 15/20;
+nom_w = scaling_factor*9.9pt;
+nom_h = scaling_factor*8.2pt;
+nom_d = scaling_factor*1.1pt;
+
+%% This does the stroke from upper left to lower right.
+
+do_fill:=true;
+%do_fill:=false;
+
+pickup my_fill_pen; 
+
+begingroup save a,b,c;
+a=45;
+
+pos0(nib,40);pos1(nib,40);
+pos2(nib,40);pos3(nib,45);
+pos4(nib,45);
+
+top rt z0r = (59/128 nom_w, nom_h);
+z1 = (64/128 nom_w, 24/64 nom_h);
+bot lft z2l = (38/64 nom_w, 3/256 nom_h);
+top rt z3r = (253/256 nom_w, 24/64 nom_h);
+z4 = (dir (a-90) * whatever) shifted z3; 
+y4 = y3 - 1/256 nom_w;
+endgroup;
+
+convert_path.p0(z0e{dir -100}..tension 1.2..z1e..%
+tension 1.2 and 1.3..z2e..tension 1.2..{dir 45}z3e);
+
+%% The steps of p0:
+%%  0    1    2    3    4    5    6    7
+%% z0l..z1l..z2l..z3l--z3r..z2r..z1r..z0r;
+%%
+
+if do_fill=true:
+pickup my_fill_pen; 
+draw subpath(2,3) of p0;
+filldraw subpath(0,2.3425) of p0.l-- reverse subpath(0,2.3425) of p0.r--cycle;
+my_pen(45);
+draw z3..z4;
+else:
+pickup my_fill_pen; 
+draw subpath(0,2.4) of p0.l-- reverse subpath(0,2.4) of p0.r--cycle;
+fi;
+
+%% This does the forestroke to the stroke from the upper left to the 
+%% lower right. There's not quite enough blank space between it and the
+%% main stroke, but I don't think I can correct this.
+
+pickup my_fill_pen; 
+pos5(nib,35);pos6(nib,35);
+top lft z5l = (18/64 nom_w, 57/64 nom_h);
+bot lft z6l = (24/64 nom_w, 43/64 nom_h);
+
+convert_path.p1(z5e{dir -70}..z6e);
+
+if do_fill=true:
+pickup my_fill_pen; 
+filldraw p1;
+else:
+pickup my_fill_pen; 
+draw p1;
+fi;
+
+%% This does the stroke from the upper right to the lower left.
+
+pos7(nib,55);
+pos8(nib,47.5);
+pos9(nib,47.5);
+pos10(nib,45);pos11(nib,45);
+pos12(nib,85);
+
+%41/64 nom_w, 41/64 nom_h); 
+top rt z7r = (44/64 nom_w, 59/64 nom_h);
+z8 = (1/2 nom_w, 29/64 nom_h);
+z9 = (55/128 nom_w, 18/64 nom_h);
+z10 = (47/128 nom_w, 4/64 nom_h);
+bot lft z11l = (13/64 nom_w, -nom_d);
+top rt z12r = (2/64 nom_w, 21/64 nom_h);
+
+%% This produces an unwanted crossing point, but I don't know how to get
+%% rid of it.
+convert_path.p2(z7e..z8e..z9e..z10e..z11e..{up}z12e);
+
+
+
+
+if do_fill=true:
+pickup my_fill_pen; around_crossing_pt(p2,0,5,x_pt_factor);
+else:
+pickup my_fill_pen; draw p2;
+fi;
+
+%% This does the forestroke to the stroke from the upper right to the
+%% lower left.
+
+pickup my_fill_pen; 
+pos13(nib,60); 
+pos14(nib,60);
+pos15(nib,85);
+top z13r = top rt z7r shifted (-2/128 nom_w, 3/128 nom_h);
+bot lft z14l = (100/128 nom_w, 91/128 nom_h);
+bot lft z15l = (29/32 nom_w, 92/128 nom_h);
+
+
+convert_path.p3(z13e..z14e..{dir 50}z15e);
+
+if do_fill=true:
+pickup my_fill_pen; 
+filldraw p3;
+else:
+pickup my_fill_pen; 
+draw p3;
+fi;
+
+do_letter_shift := true;
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+scantokens letter_shift_string;
+else:
+penlabels(range 0 thru 30);
+input nom_rules;
+%input nom_rules_extra;
+fi;
+
+
+
+
+endchar;
+
+%% This was in the local variables list. I seem not to need it, though.
+% mf-gf:"callig"
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+
+
+
+
+
+

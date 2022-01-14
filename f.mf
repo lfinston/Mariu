@@ -1,0 +1,181 @@
+%% f.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+%% This is f.mf
+%% based on drawing number 1.
+%% Revised Oct 12, 1996.
+%special "grayfont black";
+beginchar("f",6.5pt#,7.6pt#,5.5pt#); "The letter f";
+clear_vars;
+do_fill:=true;
+%do_fill:=false;
+scaling_factor = 29/20;
+nom_w = scaling_factor*4 pt;
+nom_h = scaling_factor*5 pt;
+nom_d = scaling_factor*3.5 pt;
+
+begingroup save a,b,c;
+
+a = -10;
+b = -5;
+c = (a + b)/2;
+
+% The downstroke:
+pickup my_fill_pen; 
+
+pos0(nib,a);pos1(nib,b);
+pos12(nib,a);pos13(nib,c);
+
+lft top z0l = (18/64 nom_w, 127/128 nom_h);
+lft bot z1l = (3/64 nom_w, -123/128 nom_d);
+z12 = (dir a * whatever) shifted z0; 
+rt x12r = rt x0r + 3/64 nom_w;
+lft z13l = (9/64 nom_w, 1/2 nom_h);
+
+convert_path.p0(z0e..z13e{down}..z1e);
+
+
+
+
+if do_fill=true:
+my_pen(a);
+draw z12..z0;
+pickup my_fill_pen;
+filldraw p0;
+fi;
+
+endgroup;
+
+
+% The forestroke
+my_pen(45);
+rt top z2 = (26/128 nom_w, 61/64 nom_h);
+z3 = (dir (45+5-90) * whatever) shifted z2;
+y3 = 3/4 nom_h;
+
+if do_fill=true:
+draw z2--z3;
+fi;
+
+
+% Upper arm
+% The line on the drawing is 1mm too far to the left.
+pickup my_fill_pen; 
+z4 = (16/64 nom_w, 20/64 nom_h);
+rt z5r = (45/64 nom_w, 49/64 nom_h);
+lft bot z7 = (46/64 nom_w, 26/64 nom_h);
+top rt z6r = (124/128 nom_w, 23/32 nom_h);
+
+
+begingroup save a,b,c;
+a = 47.5;
+c = 50;
+
+pos4(nib,a);pos5(nib,a);pos6(nib,c);pos7(nib,c);
+
+
+convert_path.p1 (z4e..tension 1.8..z5e..%
+tension 1.2..z6e..tension 1 and 3..z7e);
+
+if do_fill=true:
+%% Commented out, because last pen was the same as 
+%% this one
+%% pickup my_fill_pen; 
+filldraw subpath(1,2) of p1.l -- 
+reverse subpath(1,2) of  p1.r --cycle;
+
+my_pen(a); draw subpath (0,1) of p1.m;
+pickup pensquare xscaled 1.08nib yscaled nib_thickness
+rotated c;
+
+draw subpath (2,3) of p1.m;
+
+fi;
+
+endgroup;
+
+
+
+
+%%%% This does the lower arm
+
+z9 = (14/64 nom_w, 5/64 nom_h);
+z10 = (52/64 nom_w, 14/64 nom_h);
+%z11 = (5/8 nom_w, 1/32 nom_h);
+z11l = (1/2 nom_w,-3/64 nom_h);
+
+
+pos9(nib,55);pos10(nib,50);pos11(nib,45);
+
+
+convert_path.p2(z9e..tension 2.5..z10e..tension 2.5..{z11-z10}z11e);
+
+
+% The steps of p2:
+%  0     1     2     3     4    5
+% z9l..z10l..z11l--z11r..z10r..z9r--cycle;
+
+if do_fill=true:
+pickup my_fill_pen; 
+filldraw subpath(.3,1) of p2.l-- reverse
+subpath(.3,1) of p2.r--cycle;
+
+
+%%%% This does the end of the stroke, where it would otherwise 
+%%%% cause a strange path error.
+
+my_pen(angle (z11-z10));
+draw subpath(1,2) of p2.m;
+fi;
+
+
+%%%%% **************************************************
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.25pt,0);
+else:
+penlabels(range 0 thru 100);
+input f_rules;
+fi;
+
+endchar;
+
+
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+

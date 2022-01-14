@@ -1,0 +1,96 @@
+%% slong.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+%% This is slong.mf
+%% 
+%% Revised July 15, 1997.
+
+%% slong will require some kerning. It's hard to fit it in with other letters.
+
+do_fill:=true;
+%do_fill:=false;
+%special "grayfont black";
+beginchar("s",2.8pt#,8.9pt#,2.75pt#); "The letter s long";
+clear_vars;
+%do_letter_shift := false;
+letter_shift_string ="letter_shift (v0,.1pt,0pt);";
+
+scaling_factor = 27/20;
+nom_w = scaling_factor*2.3pt;
+nom_h = scaling_factor*6.1pt;
+nom_d = scaling_factor*2.1pt;
+
+pickup my_fill_pen; 
+
+% This does the downstroke.
+top rt z0r = (32/64 nom_w, nom_h);
+bot lft z1l = (7/64 nom_w,19/64 nom_h);
+bot lft z2l = (0,-nom_d);
+
+pos0(nib,52.5);pos1(nib,50);pos2(nib,50);pos3(nib,52.5);
+
+convert_path.p0 (z0e..z1e..z2e);
+
+if do_fill=true:
+filldraw p0;
+fi;
+
+
+% This does the outstroke:
+
+bot rt z3r = (nom_w, 111/128 nom_h);
+
+
+convert_path.p1 (z0e..z3e);
+
+if do_fill=true:
+filldraw p1;
+fi;
+
+if do_letter_shift = true:
+do_rules := false;
+scantokens letter_shift_string;
+else:
+penlabels(range 0 thru 3);
+input slong_rules;
+fi;
+
+
+endchar;
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+
+

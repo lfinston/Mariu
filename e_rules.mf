@@ -1,0 +1,63 @@
+%% e_rules.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+% This is e_rules.mf. 
+% It makes proofrules for the nominal box.
+% It's for e.mf, where the rules on my drawing are not perfect.
+
+% vertical rules:
+
+proofrule((0,0),(0,nom_h));
+proofrule((1pt,0),(1pt,nom_h));
+proofrule((2pt,0),(2pt,nom_h));
+proofrule((3pt,0),(3pt,nom_h));
+proofrule((3.8pt,0),(3.8pt,nom_h));	
+
+% horizontal rules:
+
+proofrule((0,0),(nom_w,0));
+proofrule((0,1.4pt),(nom_w,1.4pt));
+proofrule((0,2.7pt),(nom_w,2.7pt));
+proofrule((0,4pt),(nom_w,4pt));
+proofrule((0,5.3pt),(nom_w,5.3pt));
+
+
+proofrulethickness .5mm#;
+proofrule((0,0),(nom_w,0));
+
+
+
+
+
+
+
+
+
+
+

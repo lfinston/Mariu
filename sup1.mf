@@ -1,0 +1,102 @@
+%% sup1.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+%%%% This is sup1.mf
+%% Superscript symbol number 1, as in "Gu{\dh}s", 2rb 23
+%% It contains a lot of things which are now in macro files, so I'll
+%% have to check it over carefully and probably redo it completely.
+
+em#:=12pt#; cap#:=9pt#;ex#:=5pt#;
+u#:=.1pt#;
+thin#:=3u#; thick#:=5u#;
+define_pixels(em,cap,u,thin,thick);
+beginchar(1,1/3em#,12pt#,0); "Superscript symbol number 1";
+%% What happens when a penrazor is scaled? Is it only scaled in the x
+%% dimension?
+
+ pickup penrazor scaled .5pt rotated 30;
+% norm_pen:=savepen;
+
+% points
+z1=((7/8)*w, (27/32)*h);
+x2=x1-.5w;
+y2=55/64h;
+x3=.5[x2,x1]; y3=h;
+z4=(6/8w, .7h);
+
+% pen positions
+
+% penpos1(1.5pt,30);penpos2(1.5pt,30);penpos3(1.5pt,30);penpos4(1.5pt,30);
+
+% drawing commands
+
+% penstroke z1e..z2e..z3e..z4e;
+draw z1--z2..tension 1.5..z3..tension 2..z4;
+% vertical rules:
+
+for a=1 upto 2:
+
+proofrule(((a/3)*w,-d),((a/3)*w,h)); ; 
+		
+
+% horizontal rules:
+proofrule((0,(a/3)*h),(w,(a/3)*h));
+
+endfor;
+
+% horizontal rules for y<0 (depth):
+for a= 1 upto 2:
+proofrule((0,(a/3)*(-d)),(w,(a/3)*(-d)));
+endfor;
+
+begingroup;
+proofrulethickness .5mm#;
+proofrule((0,0),(w,0));
+endgroup;
+
+penlabels(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,20,21); 
+
+end_routine;
+
+
+% Local Variables:
+% abbrev-mode:nil
+% outline-regexp:"*"
+% auto-save-interval:25
+% End:
+
+
+
+
+
+
+
+
+
+

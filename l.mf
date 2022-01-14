@@ -1,0 +1,113 @@
+%% l.mf
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+%% This is l.mf
+%% Revised Oct 30, 1996.
+
+beginchar("l",2.9pt#,9pt#,.4pt#); "The letter l";
+%special "grayfont black";
+
+%do_fill:=true;
+do_fill:=false;
+
+clear_vars;
+scaling_factor = 28/20;
+nom_w = scaling_factor*1.7pt;
+nom_h = scaling_factor*6.2pt;
+
+% This does the downstroke:
+pickup my_fill_pen; 
+begingroup save a,b,c;
+
+a = 35;
+
+
+pos0(nib,40);pos1(nib,37.5);pos2(nib,a);pos3(nib,a);
+
+top rt z0r = (61/64 nom_w, nom_h); 
+lft z1l = (4/16 nom_w, 11/16 nom_h);
+bot lft z2l = (5/32 nom_w, 0);
+z3 = (dir a * whatever) shifted z2; 
+rt x3r = 62/64 nom_w;
+
+convert_path.p0 (z0e..z1e{z2-z1}..z2e);
+
+filldraw p0;
+
+b = 90;
+
+z6 = (dir (35 + 180) * whatever) shifted z2; 
+x6 = x2 - 9/512 nom_w;
+
+p1 = z6{dir (a-b)}..{dir a}z3;
+
+my_pen(a); 
+
+draw p1;
+
+endgroup;
+
+% This does the forestroke:
+begingroup save a,b,c;
+
+a = 40;
+
+pickup my_fill_pen; 
+pos4(nib,a);pos5(nib,a);
+bot lft z4l = (-2/64 nom_w,53/64 nom_h);
+z5 = (dir (a-90) * whatever) shifted z4; 
+x5 = x4 + 1/4 nom_w;
+my_pen(a); draw z4..z5;
+
+endgroup;
+
+
+
+%do_letter_shift := false;
+if do_letter_shift = true:
+do_rules := false;
+letter_shift (v0,.35pt,0);
+else:
+input l_rules;
+penlabels(range 0 thru 20);
+fi;
+
+endchar;
+
+
+
+
+% Local Variables:
+% auto-save-interval:0
+% End:
+
+
+
+
+
