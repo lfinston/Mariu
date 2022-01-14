@@ -1,0 +1,71 @@
+%% mariu_drawings.tex
+%% Created by Laurence D. Finston (LDF) Fri 14 Jan 2022 10:16:03 AM CET
+
+%% * (1) Copyright and License.
+
+%%%% This file is part of the source code for Mariu, a calligraphic font, programmed in METAFONT.
+%%%% Copyright (C) 2022 Laurence D. Finston
+
+%%%% Mariu is free software; you can redistribute it and/or modify 
+%%%% it under the terms of the GNU General Public License as published by 
+%%%% the Free Software Foundation; either version 3 of the License, or 
+%%%% (at your option) any later version.  
+
+%%%% Mariu is distributed in the hope that it will be useful, 
+%%%% but WITHOUT ANY WARRANTY; without even the implied warranty of 
+%%%% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
+%%%% GNU General Public License for more details.  
+
+%%%% You should have received a copy of the GNU General Public License 
+%%%% along with Mariu; if not, write to the Free Software 
+%%%% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA 
+
+%%%% Please send bug reports to Laurence.Finston@gmx.de
+
+%%%% The author can be contacted at: 
+
+%%%% Laurence D. Finston 
+%%%% Laurence.Finston@gmx.de
+
+
+
+\input epsf
+\input eplain
+\nopagenumbers
+
+\special{papersize=210mm, 297mm} %% DIN A4 Portrait
+\vsize=297mm
+\hsize=210mm
+
+\parindent=0pt
+\parskip=0pt
+\baselineskip=0pt
+
+\advance\voffset by -1in
+\advance\hoffset by -1in
+
+\advance\voffset by 1cm
+\advance\hoffset by 1cm
+
+\headline={\lower.5cm\hbox to \hsize{\hskip 1cm{\rm Mari{\'u}---Original Drawings\hskip2em
+            Copyright {\copyright} 2022 Laurence D.~Finston\hskip4em\folio
+            \hss{\tt \timestamp}}\hskip2.5cm}}
+
+\def\epsfsize#1#2{#1}
+
+\newcount\figcnt
+\figcnt=1
+\loop
+\vbox to \vsize{\vskip.25cm\line{\epsffile{m\the\figcnt.eps}\hss}\vss}
+\vfil\eject
+\advance\figcnt by 1
+\ifnum\figcnt<10\repeat
+
+\bye
+
+%% Local Variables:
+%% mode:plain-TeX
+%% auto-fill-function:nil
+%% eval:(outline-minor-mode t)
+%% outline-regexp:"%% *\\*+\\|@\\*[0-9]*"
+%% End:
